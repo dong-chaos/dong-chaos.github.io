@@ -1,322 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>机器学习之逻辑回归 | DAWN</title>
-  <meta name="keywords" content=" 机器学习 ">
-  <meta name="description" content="机器学习之逻辑回归 | DAWN">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="一、准备我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。 安装 selenium1pip install selenium 如果没有pip，请安装pip,请自行百度 下载并安装chromedriver查看当前安装的chrome浏览器版本，如果没有安装，需要先安装chrome。查看版本的方式是在浏览器">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因为这几天在看周志华老师的西瓜书，所以将自己在看书中学到的知识点并结合其他老师的博客进行总结，正好加深一下对算法的理解，也方便自己后续进行复习。 一、逻辑回归模型对数几率回归就是我们通常所说的逻辑回归(Logistic Regression)，周志华老师说中文的”逻辑”与”Logistic”和”logic”的含义相差甚远,所以将他命名为对数几率回归，学习完逻辑回归，我们也算是进入了机器学习的大门了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">
-<meta property="og:url" content="http://yoursite.com/2020/02/10/Python%E7%88%AC%E8%99%AB/index.html">
+<meta property="og:title" content="机器学习之逻辑回归">
+<meta property="og:url" content="http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/index.html">
 <meta property="og:site_name" content="DAWN">
-<meta property="og:description" content="一、准备我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。 安装 selenium1pip install selenium 如果没有pip，请安装pip,请自行百度 下载并安装chromedriver查看当前安装的chrome浏览器版本，如果没有安装，需要先安装chrome。查看版本的方式是在浏览器">
+<meta property="og:description" content="因为这几天在看周志华老师的西瓜书，所以将自己在看书中学到的知识点并结合其他老师的博客进行总结，正好加深一下对算法的理解，也方便自己后续进行复习。 一、逻辑回归模型对数几率回归就是我们通常所说的逻辑回归(Logistic Regression)，周志华老师说中文的”逻辑”与”Logistic”和”logic”的含义相差甚远,所以将他命名为对数几率回归，学习完逻辑回归，我们也算是进入了机器学习的大门了">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-02-10T06:55:56.000Z">
-<meta property="article:modified_time" content="2020-03-25T14:23:50.197Z">
+<meta property="og:image" content="http://yoursite.com/img/logic.png">
+<meta property="article:published_time" content="2019-08-15T01:34:56.000Z">
+<meta property="article:modified_time" content="2020-03-29T08:28:50.331Z">
 <meta property="article:author" content="DCDC">
-<meta property="article:tag" content="Python">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/img/logic.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
 
 
-<link rel="icon" href="/img/avatar.png">
-
-<link href="/css/style.css?v=1.0.1" rel="stylesheet">
-
-<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
-
-<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
 </script>
 
-<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <title>机器学习之逻辑回归 | DAWN</title>
+  
 
 
 
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
 
-<script src="/js/iconfont.js?v=1.0.1" ></script>
 
-<meta name="generator" content="Hexo 4.2.0"></head>
-<div style="display: none">
-  <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="false">
-  <input class="theme_blog_path" value="">
-</div>
 
-<body>
-<aside class="nav">
-    <div class="nav-left">
-        <a href="/" class="avatar_target">
-    <img class="avatar" src="/img/avatar.png" />
-</a>
-<div class="author">
-    <span>DCDC</span>
-</div>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
-<div class="icon">
-    
-        
-        <a title="rss" href="/atom.xml" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-rss"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="github" href="https://github.com/MrDDawn" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-github"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="reddit" href="https://www.reddit.com/" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-reddit"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="weibo" href="https://weibo.com/u/3941629370" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-weibo"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="email" href="mailto:15652008755@163.com" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-email"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=66584409&site=qq&menu=yes" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-qq"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="kugou" href="https://www.kugou.com/" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-kugou"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=256624433" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-neteasemusic"></use>
-                </svg>
-            
-        </a>
-        
-    
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DAWN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
 
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
-<ul>
-    <li><div class="all active">全部文章<small>(2)</small></div></li>
-    
-        
-            
-            <li><div data-rel="Python">Python<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="机器学习">机器学习<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-</ul>
-<div class="left-bottom">
-    <div class="menus">
-    
-    
-    
-    
-    </div>
-    <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
-</div>
-<input type="hidden" id="yelog_site_posts_number" value="2">
+  </li>
+        <li class="menu-item menu-item-archives">
 
-<div style="display: none">
-    <span id="busuanzi_value_site_uv"></span>
-    <span id="busuanzi_value_site_pv"></span>
-</div>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
-    </div>
-    <div class="nav-right">
-        <div class="friends-area">
-    <div class="friends-title">
-        友情链接
-        <i class="back-title-list"></i>
-    </div>
-    <div class="friends-content">
-        <ul>
-            
-            <li><a target="_blank" href="https://blog.csdn.net/v_JULY_v/article/details/78121924">机器学习面试题</a></li>
-            
-            <li><a target="_blank" href="https://www.codecogs.com/latex/eqneditor.php">Latex在线公式编辑</a></li>
-            
-        </ul>
-    </div>
+  </li>
+  </ul>
+
+</nav>
 </div>
-        <div class="title-list">
-    <form onkeydown="if(event.keyCode === 13){return false;}">
-        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
-        <i class="cross"></i>
-        <span>
-            <label for="tagswitch">Tags:</label>
-            <input id="tagswitch" type="checkbox" style="display: none" />
-            <i id="tagsWitchIcon"></i>
-        </span>
-    </form>
-    <div class="tags-list">
-    
-    <li class="article-tag-list-item">
-        <a class="color2">Python</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">机器学习</a>
-    </li>
-    
-    <div class="clearfix"></div>
-</div>
+    </header>
 
     
-    <nav id="title-list-nav">
-        
-        <a  class="Python "
-           href="/2020/02/10/Python%E7%88%AC%E8%99%AB/"
-           data-tag="Python"
-           data-author="" >
-            <span class="post-title" title="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">Python爬虫之爬取京东商城笔记本价格、名称、评论等信息</span>
-            <span class="post-date" title="2020-02-10 14:55:56">2020/02/10</span>
-        </a>
-        
-        <a  class="机器学习 "
-           href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"
-           data-tag="机器学习"
-           data-author="" >
-            <span class="post-title" title="机器学习之逻辑回归">机器学习之逻辑回归</span>
-            <span class="post-date" title="2019-08-15 09:34:56">2019/08/15</span>
-        </a>
-        
-    </nav>
-</div>
-    </div>
-    <div class="hide-list">
-        <div class="semicircle">
-            <div class="brackets first"><</div>
-            <div class="brackets">&gt;</div>
-        </div>
-    </div>
-</aside>
-<div class="post">
-    <div class="pjax">
-        <article id="post-机器学习之逻辑回归" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">机器学习之逻辑回归</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        <span class="book">
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
             
-                <a  data-rel="机器学习">机器学习</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a class="color5">机器学习</a>
-            
-        </span>
-        
-    </div>
-    <div class="article-meta">
-        
-        创建时间:<time class="date" title='更新时间: 2020-03-29 16:28:50'>2019-08-15 09:34</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读:<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DCDC">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DAWN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习之逻辑回归
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 09:34:56" itemprop="dateCreated datePublished" datetime="2019-08-15T09:34:56+08:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-29 16:28:50" itemprop="dateModified" datetime="2020-03-29T16:28:50+08:00">2020-03-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
                 </span>
             </span>
-        </span>
-        
-        
-    </div>
+
+          
+
+        </div>
+      </header>
+
     
-    <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、逻辑回归模型"><span class="toc-text">一、逻辑回归模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、模型损失函数"><span class="toc-text">二、模型损失函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、模型优化求解"><span class="toc-text">三、模型优化求解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、逻辑回归正则化"><span class="toc-text">四、逻辑回归正则化</span></a></li></ol>
     
-<style>
-    .left-col .switch-btn,
-    .left-col .switch-area {
-        display: none;
-    }
-    .toc-level-3 i,
-    .toc-level-3 ol {
-        display: none !important;
-    }
-</style>
-</div>
-    
-    <div class="article-entry" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody">
+
       
         <p>因为这几天在看周志华老师的西瓜书，所以将自己在看书中学到的知识点并结合其他老师的博客进行总结，正好加深一下对算法的理解，也方便自己后续进行复习。</p>
 <h1 id="一、逻辑回归模型"><a href="#一、逻辑回归模型" class="headerlink" title="一、逻辑回归模型"></a>一、逻辑回归模型</h1><p>对数几率回归就是我们通常所说的逻辑回归(Logistic Regression)，周志华老师说中文的”逻辑”与”Logistic”和”logic”的含义相差甚远,所以将他命名为对数几率回归，学习完逻辑回归，我们也算是进入了机器学习的大门了，大家加油啊。<br>逻辑回归虽然它的名字是回归，但实际上却是一种分类学习方法，主要是二分类。<br>对数几率函数（sigmoid函数）表示如下：</p>
@@ -344,345 +230,251 @@ P \left( y = 0 | \mathbf{x} \right) &=  1- \sigma\left(\mathbf{w}\cdot\mathbf{x}
 <p>当然逻辑回归也可以进行多分类学习，多分类逻辑回归模型使用的是softmax函数进行求解。</p>
 <h1 id="四、逻辑回归正则化"><a href="#四、逻辑回归正则化" class="headerlink" title="四、逻辑回归正则化"></a>四、逻辑回归正则化</h1><p>当模型的参数过多时，很容易遇到过拟合的问题。而正则化是结构风险最小化的一种实现方式，通过在经验风险上加一个正则化项，来惩罚过大的参数来防止过拟合。<br>我们可以在加入L1正则化和L2正则化<br>L2正则化：目标函数中增加所有权重w参数的平方之和, 逼迫所有w尽可能趋向零但不为零. 因为过拟合的时候, 拟合函数需要顾忌每一个点, 最终形成的拟合函数波动很大, 在某些很小的区间里, 函数值的变化很剧烈, 也就是某些w非常大. 为此, L2正则化的加入就惩罚了权重变大的趋势.<br>L1正则化：目标函数中增加所有权重w参数的绝对值之和, 逼迫更多w为零(也就是变稀疏. L2因为其导数也趋0, 奔向零的速度不如L1给力了). 大家对稀疏规则化趋之若鹜的一个关键原因在于它能实现特征的自动选择。一般来说，xi的大部分元素（也就是特征）都是和最终的输出yi没有关系或者不提供任何信息的，在最小化目标函数的时候考虑xi这些额外的特征，虽然可以获得更小的训练误差，但在预测新的样本时，这些没用的特征权重反而会被考虑，从而干扰了对正确yi的预测。稀疏规则化算子的引入就是为了完成特征自动选择的光荣使命，它会学习地去掉这些无用的特征，也就是把这些特征对应的权重置为0。</p>
 
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 dcdcdcml@gmail.com </span>
     </div>
-</article>
-
-
-<p>
-    <a  class="dashang" onclick="dashangToggle()">赏</a>
-</p>
-
-
-<div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>机器学习之逻辑回归</p>
-    
-    <p><span class="copy-title">本文作者:</span><a  title="DCDC">DCDC</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-08-15, 09:34:56</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-29, 16:28:50</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="机器学习之逻辑回归">http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/</a>
-    <p>
-        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-    </p>
-</div>
-
-
-
-
 
     
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/Python%E7%88%AC%E8%99%AB/" rel="next" title="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">
+      Python爬虫之爬取京东商城笔记本价格、名称、评论等信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
+  }
 </script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
-    
 
-
-
-
-    </div>
-    <div class="copyright">
-        <p class="footer-entry">©2017-2020 牛逼哥</p>
-<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
-
-    </div>
-    <div class="full-toc">
-        <button class="full"><span class="min "></span></button>
-<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
-<div class="post-toc"><span class="post-toc-title">目录</span>
-    <div class="post-toc-content">
-
-    </div>
-</div>
-<a class="" id="rocket" ></a>
-
-    </div>
-</div>
-<div class="acParent"></div>
-
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close"  onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/img/alipay.png" class="alipay" title="扫码支持">
-            <img src="/img/weixin.png" class="weixin" title="扫码支持">
         </div>
-    </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、逻辑回归模型"><span class="nav-number">1.</span> <span class="nav-text">一、逻辑回归模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、模型损失函数"><span class="nav-number">2.</span> <span class="nav-text">二、模型损失函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、模型优化求解"><span class="nav-number">3.</span> <span class="nav-text">三、模型优化求解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、逻辑回归正则化"><span class="nav-number">4.</span> <span class="nav-text">四、逻辑回归正则化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DCDC</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
 </div>
 
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DCDC</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
 
 </body>
-<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
-
-<script src="/js/script.js?v=1.0.1" ></script>
-<script>
-    var img_resize = 'default';
-    /*作者、标签的自动补全*/
-    $(function () {
-        $('.search').AutoComplete({
-            'data': ['#Python','#机器学习',],
-            'itemHeight': 20,
-            'width': 418
-        }).AutoComplete('show');
-    })
-    function initArticle() {
-        /*渲染对应的表格样式*/
-        
-            $(".post .pjax table").addClass("green_title");
-        
-
-        /*渲染打赏样式*/
-        
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
-
-        /*高亮代码块行号*/
-        
-        $('pre code').each(function(){
-            var lines = $(this).text().split('\n').length - 1, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
-
-        /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        
-
-        /*代码高亮，行号对齐*/
-        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
-
-        
-        
-    }
-
-    /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
-    }
-    
-
-</script>
-
-<!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 0.5em 3px 0.7em 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: #fafafa;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
-
-<!--自定义样式设置-->
-<style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
-    
-    
-    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #383636;
-    }
-    
-    
-    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #5e5e5f;
-    }
-    
-    
-    .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #e2e0e0;
-    }
-    
-    
-
-    /*列表样式*/
-    
-    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
-        border: #e2dede solid 1px;
-        border-radius: 10px;
-        padding: 10px 32px 10px 56px;
-    }
-    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    
-
-    /* 背景图样式 */
-    
-    
-
-
-    /*引用块样式*/
-    
-
-    /*文章列表背景图*/
-    
-    .nav-right:before {
-        content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.3;
-        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        -ms-background-size: cover;
-        -o-background-size: cover;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-    
-
-    
-</style>
-
-
-
-
-
-
-
 </html>

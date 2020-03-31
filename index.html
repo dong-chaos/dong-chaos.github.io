@@ -1,570 +1,539 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>DAWN</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="DAWN">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="一、准备我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。 安装 selenium1pip install selenium 如果没有pip，请安装pip,请自行百度 下载并安装chromedriver查看当前安装的chrome浏览器版本，如果没有安装，需要先安装chrome。查看版本的方式是在浏览器">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">
-<meta property="og:url" content="http://yoursite.com/2020/02/10/Python%E7%88%AC%E8%99%AB/index.html">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="DAWN">
+<meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="DAWN">
-<meta property="og:description" content="一、准备我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。 安装 selenium1pip install selenium 如果没有pip，请安装pip,请自行百度 下载并安装chromedriver查看当前安装的chrome浏览器版本，如果没有安装，需要先安装chrome。查看版本的方式是在浏览器">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-02-10T06:55:56.000Z">
-<meta property="article:modified_time" content="2020-03-25T14:23:50.197Z">
 <meta property="article:author" content="DCDC">
-<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
 
+<link rel="canonical" href="http://yoursite.com/">
 
-<link rel="icon" href="/img/avatar.png">
 
-<link href="/css/style.css?v=1.0.1" rel="stylesheet">
-
-<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
-
-<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false
+  };
 </script>
 
-<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-
-
-
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-
-<script src="/js/iconfont.js?v=1.0.1" ></script>
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-<div style="display: none">
-  <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="false">
-  <input class="theme_blog_path" value="">
-</div>
-
-<body>
-<aside class="nav mobile">
-    <div class="nav-left">
-        <a href="/" class="avatar_target">
-    <img class="avatar" src="/img/avatar.png" />
-</a>
-<div class="author">
-    <span>DCDC</span>
-</div>
-
-<div class="icon">
-    
-        
-        <a title="rss" href="/atom.xml" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-rss"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="github" href="https://github.com/MrDDawn" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-github"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="reddit" href="https://www.reddit.com/" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-reddit"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="weibo" href="https://weibo.com/u/3941629370" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-weibo"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="email" href="mailto:15652008755@163.com" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-email"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=66584409&site=qq&menu=yes" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-qq"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="kugou" href="https://www.kugou.com/" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-kugou"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=256624433" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-neteasemusic"></use>
-                </svg>
-            
-        </a>
-        
-    
-</div>
+  <title>DAWN</title>
+  
 
 
 
 
-<ul>
-    <li><div class="all active">全部文章<small>(2)</small></div></li>
-    
-        
-            
-            <li><div data-rel="Python">Python<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="机器学习">机器学习<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-</ul>
-<div class="left-bottom">
-    <div class="menus">
-    
-    
-    
-    
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
-</div>
-<input type="hidden" id="yelog_site_posts_number" value="2">
+  </div>
 
-<div style="display: none">
-    <span id="busuanzi_value_site_uv"></span>
-    <span id="busuanzi_value_site_pv"></span>
-</div>
+  <div class="site-meta">
 
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DAWN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
-    <div class="nav-right">
-        <div class="friends-area">
-    <div class="friends-title">
-        友情链接
-        <i class="back-title-list"></i>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
-    <div class="friends-content">
-        <ul>
-            
-            <li><a target="_blank" href="https://blog.csdn.net/v_JULY_v/article/details/78121924">机器学习面试题</a></li>
-            
-            <li><a target="_blank" href="https://www.codecogs.com/latex/eqneditor.php">Latex在线公式编辑</a></li>
-            
-        </ul>
-    </div>
-</div>
-        <div class="title-list">
-    <form onkeydown="if(event.keyCode === 13){return false;}">
-        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
-        <i class="cross"></i>
-        <span>
-            <label for="tagswitch">Tags:</label>
-            <input id="tagswitch" type="checkbox" style="display: none" />
-            <i id="tagsWitchIcon"></i>
-        </span>
-    </form>
-    <div class="tags-list">
-    
-    <li class="article-tag-list-item">
-        <a class="color2">Python</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">机器学习</a>
-    </li>
-    
-    <div class="clearfix"></div>
+  </div>
 </div>
 
-    
-    <nav id="title-list-nav">
-        
-        <a  class="Python "
-           href="/2020/02/10/Python%E7%88%AC%E8%99%AB/"
-           data-tag="Python"
-           data-author="" >
-            <span class="post-title" title="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">Python爬虫之爬取京东商城笔记本价格、名称、评论等信息</span>
-            <span class="post-date" title="2020-02-10 14:55:56">2020/02/10</span>
-        </a>
-        
-        <a  class="机器学习 "
-           href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"
-           data-tag="机器学习"
-           data-author="" >
-            <span class="post-title" title="机器学习之逻辑回归">机器学习之逻辑回归</span>
-            <span class="post-date" title="2019-08-15 09:34:56">2019/08/15</span>
-        </a>
-        
-    </nav>
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
 </div>
-    </div>
-    <div class="hide-list">
-        <div class="semicircle">
-            <div class="brackets first"><</div>
-            <div class="brackets">&gt;</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/Python%E7%88%AC%E8%99%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DCDC">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DAWN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/10/Python%E7%88%AC%E8%99%AB/" class="post-title-link" itemprop="url">Python爬虫之爬取京东商城笔记本价格、名称、评论等信息</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-10 14:55:56" itemprop="dateCreated datePublished" datetime="2020-02-10T14:55:56+08:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-25 22:23:50" itemprop="dateModified" datetime="2020-03-25T22:23:50+08:00">2020-03-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
         </div>
-    </div>
-</aside>
-<div class="post index">
-    <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+      </header>
+
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Why-Blog"><span class="toc-text">Why Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对博客的理解"><span class="toc-text">对博客的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于DAWN"><span class="toc-text">关于DAWN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
     
-<style>
-    .left-col .switch-btn,
-    .left-col .switch-area {
-        display: none;
-    }
-    .toc-level-3 i,
-    .toc-level-3 ol {
-        display: none !important;
-    }
-</style>
-</div>
-            <h1 id="Why-Blog"><a href="#Why-Blog" class="headerlink" title="Why Blog"></a>Why Blog</h1><h2 id="对博客的理解"><a href="#对博客的理解" class="headerlink" title="对博客的理解"></a>对博客的理解</h2><p>喜欢写Blog的人，会经历三个阶段。</p>
-<blockquote>
-<p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。</p>
-<p>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。</p>
-<p>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
-</blockquote>
-<p>我们每个人的在网络上产生的数据越来越多，这些信息是我们在互联网上存在过的痕迹，值得我们认真对待。但是它们被分散分布在各个网站上。很多时候我们很难将它们聚合在一起，而且各个网站的信息排布方式也没有办法自由控制，所以我们需要一个可以由自己主宰的空间——博客。</p>
-<p>通过博客，我们可以记录自己的生活和成长的轨迹。它不像 Twitter 那样碎片化，也不像 Facebook 那样关系化，它是私人的空间。</p>
-<h2 id="关于DAWN"><a href="#关于DAWN" class="headerlink" title="关于DAWN"></a>关于DAWN</h2><p><strong>DAWN</strong> 是DC（DAWN）的个人站。</p>
-<p>到目前为止已经写了<code class="article_number">&lt;/code&gt;篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv">&lt;/code&gt;人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
-<ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad/手机等移动端适配</li>
-<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
-</ul>
+    
+    <div class="post-body" itemprop="articleBody">
 
-        </article>
+      
+          <h1 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h1><p>我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。</p>
+<h2 id="安装-selenium"><a href="#安装-selenium" class="headerlink" title="安装 selenium"></a>安装 selenium</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
+<p>如果没有pip，请安装pip,请自行百度</p>
+<h2 id="下载并安装chromedriver"><a href="#下载并安装chromedriver" class="headerlink" title="下载并安装chromedriver"></a>下载并安装chromedriver</h2><p>查看当前安装的chrome浏览器版本，如果没有安装，需要先安装chrome。查看版本的方式是在浏览器地址栏输入:chrome://version/<br>以下有两个下载地址，请选择合适的版本添加，以大版本号为主,下载完以后解压并将chromedriver.exe放在chrome的安装目录下<br><a href="http://chromedriver.storage.googleapis.com/index.html" target="_blank" rel="noopener">http://chromedriver.storage.googleapis.com/index.html</a><br><a href="https://npm.taobao.org/mirrors/chromedriver/" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/chromedriver/</a></p>
+<h1 id="二、代码-内含详解"><a href="#二、代码-内含详解" class="headerlink" title="二、代码(内含详解)"></a>二、代码(内含详解)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">#导入相关python包</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.support.wait import WebDriverWait</span><br><span class="line">from selenium.webdriver.support import expected_conditions as EC</span><br><span class="line">from selenium.webdriver.common.by import By</span><br><span class="line">import selenium.common.exceptions</span><br><span class="line">import csv</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 定于一个爬虫类</span><br><span class="line">class JdSpider():</span><br><span class="line">    # 创建一个csv的文件</span><br><span class="line">    fd &#x3D; open(&#39;Jd.csv&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf-8&#39;, newline&#x3D;&#39;&#39;)</span><br><span class="line"></span><br><span class="line">    # 通过webdriver打开Chrome浏览器，模拟人工的操作</span><br><span class="line">    browser &#x3D; webdriver.Chrome()</span><br><span class="line"></span><br><span class="line">    #设置浏览器隐式等待</span><br><span class="line">    browser.implicitly_wait(10)</span><br><span class="line"></span><br><span class="line">    # 通过创建webDriverWait的类对象，</span><br><span class="line">    wait &#x3D; WebDriverWait(browser, 10)</span><br><span class="line"></span><br><span class="line">    # 定于一个开关，用于判断是否是最后一页，默认不是</span><br><span class="line">    isLast &#x3D; False</span><br><span class="line"></span><br><span class="line">    # 将创建的文件写入csv文件</span><br><span class="line">    writer &#x3D; csv.writer(fd)</span><br><span class="line">	</span><br><span class="line">    # 写入CSV文件的标题</span><br><span class="line">    writer.writerow([&#39;link&#39;, &#39;price&#39;, &#39;title&#39;, &#39;comment&#39;, &#39;shop&#39;])</span><br><span class="line"></span><br><span class="line">    # 定义函数，解析页面</span><br><span class="line">    def parse_page(self):</span><br><span class="line">        try:</span><br><span class="line">         </span><br><span class="line">            #通过until方法能够判断</span><br><span class="line">            skus &#x3D; self.wait.until(EC.presence_of_all_elements_located((By.XPATH, &#39;&#x2F;&#x2F;li[@class&#x3D;&quot;gl-item&quot;]&#39;)))</span><br><span class="line"></span><br><span class="line">            # 根据获取所有的gl_item 元素节点的内容，遍历获取对于的data-sku的数据----每个商品唯一的id</span><br><span class="line">            skus &#x3D; [item.get_attribute(&#39;data-sku&#39;) for item in skus]</span><br><span class="line"></span><br><span class="line">            # 接下来就是来获取每个商品对应的数据</span><br><span class="line">            # 1.商品的链接---点击商品观察地址栏的链接数据，就是https:&#x2F;&#x2F;item.jd.com&#x2F;&#123;sku&#125;.html</span><br><span class="line">            # 这里面的sku就是我刚才获取的产品唯一的id</span><br><span class="line">            links &#x3D; [&#39;https:&#x2F;&#x2F;item.jd.com&#x2F;&#123;sku&#125;.html&#39;.format(sku&#x3D;item) for item in skus]</span><br><span class="line"></span><br><span class="line">            # #商品价格</span><br><span class="line">            prices &#x3D; self.wait.until(</span><br><span class="line">                EC.presence_of_all_elements_located((By.XPATH, &#39;&#x2F;&#x2F;div[@class&#x3D;&quot;gl-i-wrap&quot;]&#x2F;div[2]&#x2F;strong&#x2F;i&#39;)))</span><br><span class="line">            prices &#x3D; [item.text for item in prices]</span><br><span class="line">            #</span><br><span class="line">            # #商品名称</span><br><span class="line">            names &#x3D; self.wait.until(</span><br><span class="line">                EC.presence_of_all_elements_located((By.XPATH, &#39;&#x2F;&#x2F;div[@class&#x3D;&quot;gl-i-wrap&quot;]&#x2F;div[3]&#x2F;a&#x2F;em&#39;)))</span><br><span class="line">            names &#x3D; [item.text for item in names]</span><br><span class="line">            #</span><br><span class="line">            # #商品评论</span><br><span class="line">            comments &#x3D; self.wait.until(</span><br><span class="line">                EC.presence_of_all_elements_located((By.XPATH, &#39;&#x2F;&#x2F;div[@class&#x3D;&quot;gl-i-wrap&quot;]&#x2F;div[4]&#x2F;strong&#39;)))</span><br><span class="line">            comments &#x3D; [item.text for item in comments]</span><br><span class="line"></span><br><span class="line">            # 店铺名字</span><br><span class="line">            shop_name &#x3D; self.wait.until(</span><br><span class="line">                EC.presence_of_all_elements_located((By.XPATH, &#39;&#x2F;&#x2F;div[@class&#x3D;&quot;gl-i-wrap&quot;]&#x2F;div[5]&#x2F;span&#x2F;a&#39;)))</span><br><span class="line">            shop_name &#x3D; [item.text for item in shop_name]</span><br><span class="line"></span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            将获取的数据打包</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            self.data &#x3D; zip(links, prices, names, comments, shop_name)</span><br><span class="line">            # self.data &#x3D; zip(shop_name)</span><br><span class="line"></span><br><span class="line">            # 请求超时异常</span><br><span class="line">        except selenium.common.exceptions.TimeoutException:</span><br><span class="line">            print(&#39;parse_page: TimeoutException&#39;)</span><br><span class="line">            # 当请求异常时再次解析</span><br><span class="line">            self.parse_page()</span><br><span class="line">            # 超时元素异常</span><br><span class="line">        except selenium.common.exceptions.StaleElementReferenceException:</span><br><span class="line">            print(&#39;parse_page: StaleElementReferenceException&#39;)</span><br><span class="line">            # 重新刷新页面</span><br><span class="line">            self.browser.refresh()</span><br><span class="line"></span><br><span class="line">    # 定于函数，用于滚动页面</span><br><span class="line">    def turn_page(self):</span><br><span class="line">        try:</span><br><span class="line">            # 获取下一页的按钮，并设置点击事件，</span><br><span class="line">            self.wait.until(EC.element_to_be_clickable((By.XPATH, &#39;&#x2F;&#x2F;a[@class&#x3D;&quot;pn-next&quot;]&#39;))).click()</span><br><span class="line">            # 防止点击过快，睡眠一秒</span><br><span class="line">            time.sleep(1)</span><br><span class="line">            # 让浏览器滚动起来，获取窗口的滚动控件，从0到整个窗口的高度</span><br><span class="line">            self.browser.execute_script(&quot;window.scrollTo(0,document.body.scrollHeight)&quot;)</span><br><span class="line">            # 设置窗口的滚动的时间为2秒</span><br><span class="line">            time.sleep(2)</span><br><span class="line">            # 当出现异常的时候的处理方案</span><br><span class="line">            # 没有找到该元素</span><br><span class="line">        except selenium.common.exceptions.NoSuchElementException:</span><br><span class="line">            # 打开开关，让其继续找</span><br><span class="line">            self.isLast &#x3D; True</span><br><span class="line">            # 当请求超时的时候，重新滚动页面</span><br><span class="line">        except selenium.common.exceptions.TimeoutException:</span><br><span class="line">            print(&#39;turn_page: TimeoutException&#39;)</span><br><span class="line">            self.turn_page()</span><br><span class="line">            # 过时元素异常</span><br><span class="line">        except selenium.common.exceptions.StaleElementReferenceException:</span><br><span class="line">            print(&#39;turn_page: StaleElementReferenceException&#39;)</span><br><span class="line">            # 刷新页面</span><br><span class="line">            self.browser.refresh()</span><br><span class="line"></span><br><span class="line">    # 定于函数，用于写入数据</span><br><span class="line">    def write_to_file(self):</span><br><span class="line"></span><br><span class="line">        # 遍历数据，将获取的每条数据进行写入</span><br><span class="line">        for item in self.data:</span><br><span class="line">            self.writer.writerow(item)</span><br><span class="line"></span><br><span class="line">    def crawl(self):</span><br><span class="line"></span><br><span class="line">        print(&#39;开始爬取&#39;)</span><br><span class="line"></span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        通过浏览器打开需要爬去的页面</span><br><span class="line">        用 Chrome 浏览器打开 [笔记本商品首页]</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        self.browser.get(&#39;https:&#x2F;&#x2F;search.jd.com&#x2F;Search?keyword&#x3D;%E7%AC%94%E8%AE%B0%E6%9C%AC&amp;enc&#x3D;utf-8&#39;)</span><br><span class="line">        # 让其休息1秒</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        通过浏览器爬去整个页面的内容</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        self.browser.execute_script(&quot;window.scrollTo(0,document.body.scrollHeight)&quot;)</span><br><span class="line">        time.sleep(2)</span><br><span class="line">        count &#x3D; 0</span><br><span class="line"></span><br><span class="line">        # 循环判断是否是最后一页，如果不是就继续爬去，知道所有的页面数据全部爬去完成为止</span><br><span class="line">        while not self.isLast:</span><br><span class="line">            count +&#x3D; 1</span><br><span class="line">            print(&#39;正在爬取第 &#39; + str(count) + &#39; 页......&#39;)</span><br><span class="line">            self.parse_page()</span><br><span class="line">            self.write_to_file()</span><br><span class="line">            self.turn_page()</span><br><span class="line">        # 当页面爬取数据完成后关闭文件，关闭浏览器</span><br><span class="line">        self.fd.close()</span><br><span class="line">        self.browser.quit()</span><br><span class="line">        print(&#39;结束爬取&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    spider &#x3D; JdSpider()</span><br><span class="line">    spider.crawl()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
-    </div>
-    <div class="copyright">
-        <p class="footer-entry">©2017-2020 牛逼哥</p>
-<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
 
-    </div>
-    <div class="full-toc">
-        <button class="full"><span class="min "></span></button>
-<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
-<div class="post-toc"><span class="post-toc-title">目录</span>
-    <div class="post-toc-content">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DCDC">
+      <meta itemprop="description" content="">
+    </span>
 
-    </div>
-</div>
-<a class="" id="rocket" ></a>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DAWN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" class="post-title-link" itemprop="url">机器学习之逻辑回归</a>
+        </h1>
 
-    </div>
-</div>
-<div class="acParent"></div>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close"  onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/img/alipay.png" class="alipay" title="扫码支持">
-            <img src="/img/weixin.png" class="weixin" title="扫码支持">
+              <time title="Created: 2019-08-15 09:34:56" itemprop="dateCreated datePublished" datetime="2019-08-15T09:34:56+08:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-29 16:28:50" itemprop="dateModified" datetime="2020-03-29T16:28:50+08:00">2020-03-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
         </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因为这几天在看周志华老师的西瓜书，所以将自己在看书中学到的知识点并结合其他老师的博客进行总结，正好加深一下对算法的理解，也方便自己后续进行复习。</p>
+<h1 id="一、逻辑回归模型"><a href="#一、逻辑回归模型" class="headerlink" title="一、逻辑回归模型"></a>一、逻辑回归模型</h1><p>对数几率回归就是我们通常所说的逻辑回归(Logistic Regression)，周志华老师说中文的”逻辑”与”Logistic”和”logic”的含义相差甚远,所以将他命名为对数几率回归，学习完逻辑回归，我们也算是进入了机器学习的大门了，大家加油啊。<br>逻辑回归虽然它的名字是回归，但实际上却是一种分类学习方法，主要是二分类。<br>对数几率函数（sigmoid函数）表示如下：</p>
+<script type="math/tex; mode=display">sigmoid\left(z\right)=\sigma\left(z\right)=\frac{1}{1+e^{-z}}</script><p>其中，$z\in\mathbb{R}$，$sigoid\left(z\right)\in\left(0,1\right)$。<br><img src="/img/logic.png" alt="sigmoid函数"><br>sigmoid函数的导数：</p>
+<script type="math/tex; mode=display">\sigma'\left(z\right)=\sigma\left(z\right)\left(1-\sigma\left(z\right)\right)</script><p>二分类逻辑斯谛回归模型是如下的条件概率分布：</p>
+<script type="math/tex; mode=display">\begin{align*}   P \left( y = 1 | \mathbf{x} \right) &=\sigma\left(\mathbf{w}\cdot\mathbf{x}+b\right)   \\ 
+&=  \dfrac{1}{1+\exp{\left(-\left(\mathbf{w} \cdot \mathbf{x} + b \right)\right)}}
+\\ &= \dfrac{\exp{\left(\mathbf{w} \cdot \mathbf{x} + b \right)}}{1+\exp{\left( \mathbf{w} \cdot \mathbf{x} + b \right)}}\\
+P \left( y = 0 | \mathbf{x} \right) &=  1- \sigma\left(\mathbf{w}\cdot\mathbf{x}+b\right)
+\\ &=\dfrac{1}{1+\exp{\left( \mathbf{w} \cdot \mathbf{x} + b \right)}}\end{align*}</script><p>可将权值权值向量和特征向量加以扩充，即增广权值向量$\hat{\mathbf{w}} = \left( w^{\left(1\right)},w^{\left(2\right)},\cdots,w^{\left(n\right)},b \right)^\top$，增广特征向量$\hat{\mathbf{x}} = \left( x^{\left(1\right)},x^{\left(2\right)},\cdots,x^{\left(n\right)},1 \right)^\top$，则逻辑斯谛回归模型：</p>
+<script type="math/tex; mode=display">\begin{align*} \\&  P \left( y = 1 | \hat{\mathbf{x}} \right) = \dfrac{\exp{\left(\hat{\mathbf{w}} \cdot \hat{\mathbf{x}} \right)}}{1+\exp{\left( \hat{\mathbf{w}} \cdot \hat{\mathbf{x}}  \right)}}\\&  P \left( y = 0 | \hat{\mathbf{x}} \right) =\dfrac{1}{1+\exp{\left( \hat{\mathbf{w}} \cdot \hat{\mathbf{x}}  \right)}}\end{align*}</script><h1 id="二、模型损失函数"><a href="#二、模型损失函数" class="headerlink" title="二、模型损失函数"></a>二、模型损失函数</h1><p>逻辑回归参数学习使用-最大似然估计法，给定训练数据集</p>
+<script type="math/tex; mode=display">\begin{align*} \\& D = \left\{ \left( \hat{\mathbf{x}}_{1}, y_{1} \right), \left( \hat{\mathbf{x}}_{2}, y_{2} \right), \cdots, \left( \hat{\mathbf{x}}_{N}, y_{N} \right) \right\} \end{align*}</script><p>其中，$\hat{\mathbf{x}}_{i} \in \mathbb{R}^{n+1}, y_{i} \in \left\{ 0, 1 \right\}, i = 1, 2, \cdots, N$。<br>设</p>
+<script type="math/tex; mode=display">\begin{align*} \\& P \left( y =1 | \hat{\mathbf{x}} \right)  =\sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}} \right) ,\quad P \left( y =0 | \hat{\mathbf{x}} \right) = 1 - \sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}} \right)  \end{align*}</script><p>似然函数:</p>
+<script type="math/tex; mode=display">
+\begin{align*}  L \left( \hat{\mathbf{w}} \right)  &= \prod_{i=1}^N P\left(y_i|\hat{\mathbf{x}}_i\right)  \\
+&= \prod_{i=1}^{N} \left[ \sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}}_{i} \right) \right]^{y_{i}}\left[ 1 - \sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}}_{i} \right) \right]^{1 - y_{i}}\end{align*}</script><p>对数似然函数:</p>
+<script type="math/tex; mode=display">\begin{align*} \\ l \left( \hat{\mathbf{w}} \right) &= \log L \left( \hat{\mathbf{w}} \right) 
+\\ & = \sum_{i=1}^{N} \left[ y_{i} \log \sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}}_{i} \right) + \left( 1 - y_{i} \right) \log \left( 1 - \sigma \left( \hat{\mathbf{w}}\cdot\hat{\mathbf{x}}_{i} \right) \right) \right]\end{align*}</script><p>最大似然估计:</p>
+<script type="math/tex; mode=display">\hat{\mathbf{w}}^*=\mathop{\arg\max}_{\hat{\mathbf{w}}} l\left(\hat{\mathbf{w}}\right)</script><p>一般情况下我们会求最小值，所以最小负对数损失:</p>
+<script type="math/tex; mode=display">\hat{\mathbf{w}}^*=\mathop{\arg\min}_{\hat{\mathbf{w}}}-l\left(\hat{\mathbf{w}}\right)</script><p>令$\hat{y}_i=\sigma\left(\hat{\mathbf{w}}\cdot\hat{\mathbf{x}}_i\right)$，则对数似然函数$l\left(\hat{\mathbf{w}}\right)$关于$\hat{\mathbf{w}}$的偏导数</p>
+<script type="math/tex; mode=display">\begin{align*}\frac{\partial l\left(\hat{\mathbf{w}}\right)}{\partial \hat{\mathbf{w}}} &=-\sum_{i=1}^N\left(y_i\frac{\hat{y}_i\left(1-\hat{y}_i\right)}{\hat{y}_i}\hat{\mathbf{x}}_i-\left(1-y_i\right)\frac{\hat{y}_i\left(1-\hat{y}_i\right)}{1-\hat{y}_i}\hat{\mathbf{x}}_i\right)\\
+&=-\sum_{i=1}^N\left(y_i\left(1-\hat{y}_i\right)\hat{\mathbf{x}}_i-\left(1-y_i\right)\hat{y}_i\hat{\mathbf{x}}_i\right) \\
+&=-\sum_{i=1}^N\hat{\mathbf{x}}_i\left(y_i-\hat{y}_i\right)\end{align*}</script><h1 id="三、模型优化求解"><a href="#三、模型优化求解" class="headerlink" title="三、模型优化求解"></a>三、模型优化求解</h1><p>然后我们令该导数为0，你会很失望的发现，它无法解析求解。只能采用经典的梯度下降法来求解，初始化$\hat{\mathbf{w}}=\mathbf{0}$，进行迭代</p>
+<script type="math/tex; mode=display">\hat{\mathbf{w}}_{t+1}\gets\hat{\mathbf{w}}_t+\alpha\sum_{i=1}^N\hat{\mathbf{x}}_i\left(y_i-\hat{y}_i^{\hat{\mathbf{w}}_t}\right)</script><p>其中，$\alpha$是学习率，$\hat{y}_i^{\hat{\mathbf{w}}_t}$是当参数$\hat{\mathbf{w}}_t$时模型的预测输出。</p>
+<p>当然逻辑回归也可以进行多分类学习，多分类逻辑回归模型使用的是softmax函数进行求解。</p>
+<h1 id="四、逻辑回归正则化"><a href="#四、逻辑回归正则化" class="headerlink" title="四、逻辑回归正则化"></a>四、逻辑回归正则化</h1><p>当模型的参数过多时，很容易遇到过拟合的问题。而正则化是结构风险最小化的一种实现方式，通过在经验风险上加一个正则化项，来惩罚过大的参数来防止过拟合。<br>我们可以在加入L1正则化和L2正则化<br>L2正则化：目标函数中增加所有权重w参数的平方之和, 逼迫所有w尽可能趋向零但不为零. 因为过拟合的时候, 拟合函数需要顾忌每一个点, 最终形成的拟合函数波动很大, 在某些很小的区间里, 函数值的变化很剧烈, 也就是某些w非常大. 为此, L2正则化的加入就惩罚了权重变大的趋势.<br>L1正则化：目标函数中增加所有权重w参数的绝对值之和, 逼迫更多w为零(也就是变稀疏. L2因为其导数也趋0, 奔向零的速度不如L1给力了). 大家对稀疏规则化趋之若鹜的一个关键原因在于它能实现特征的自动选择。一般来说，xi的大部分元素（也就是特征）都是和最终的输出yi没有关系或者不提供任何信息的，在最小化目标函数的时候考虑xi这些额外的特征，虽然可以获得更小的训练误差，但在预测新的样本时，这些没用的特征权重反而会被考虑，从而干扰了对正确yi的预测。稀疏规则化算子的引入就是为了完成特征自动选择的光荣使命，它会学习地去掉这些无用的特征，也就是把这些特征对应的权重置为0。</p>
+
+      
     </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DCDC</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
 </div>
 
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DCDC</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
 
 </body>
-<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
-
-<script src="/js/script.js?v=1.0.1" ></script>
-<script>
-    var img_resize = 'default';
-    /*作者、标签的自动补全*/
-    $(function () {
-        $('.search').AutoComplete({
-            'data': ['#Python','#机器学习',],
-            'itemHeight': 20,
-            'width': 418
-        }).AutoComplete('show');
-    })
-    function initArticle() {
-        /*渲染对应的表格样式*/
-        
-            $(".post .pjax table").addClass("green_title");
-        
-
-        /*渲染打赏样式*/
-        
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
-
-        /*高亮代码块行号*/
-        
-        $('pre code').each(function(){
-            var lines = $(this).text().split('\n').length - 1, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
-
-        /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        
-
-        /*代码高亮，行号对齐*/
-        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
-
-        
-        
-    }
-
-    /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
-    }
-    
-
-</script>
-
-<!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 0.5em 3px 0.7em 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: #fafafa;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
-
-<!--自定义样式设置-->
-<style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
-    
-    
-    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #383636;
-    }
-    
-    
-    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #5e5e5f;
-    }
-    
-    
-    .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #e2e0e0;
-    }
-    
-    
-
-    /*列表样式*/
-    
-    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
-        border: #e2dede solid 1px;
-        border-radius: 10px;
-        padding: 10px 32px 10px 56px;
-    }
-    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    
-
-    /* 背景图样式 */
-    
-    
-
-
-    /*引用块样式*/
-    
-
-    /*文章列表背景图*/
-    
-    .nav-right:before {
-        content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.3;
-        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        -ms-background-size: cover;
-        -o-background-size: cover;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-    
-
-    
-</style>
-
-
-
-
-
-
-
 </html>
