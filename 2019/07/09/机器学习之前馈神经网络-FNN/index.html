@@ -28,7 +28,7 @@
 <meta property="og:description" content="这两天在学习深度学习的相关知识，为了巩固自己所学的知识，在这里继续整理一下前馈神经网络.在前馈神经网络中，不同的神经元属于不同的层，每一层的神经元可以接受到前一层的神经元信号，并产生信号输出到下一层。第0层叫做输入层，最后一层叫做输出层，中间的叫做隐藏层，整个网络中无反馈，信号从输入层到输出层单向传播，可用一个有用无环图表示。前馈神经网络也成为多层感知器（Mutlti-Layer Perceptr">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-07-09T03:30:00.000Z">
-<meta property="article:modified_time" content="2020-04-04T16:56:17.360Z">
+<meta property="article:modified_time" content="2020-04-04T17:04:54.618Z">
 <meta property="article:author" content="DCDC">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@ b_j^l & \leftarrow b_j^l-\alpha \dfrac {\partial C} {\partial b_j^{l}}  \\
 \end{align}</script><h1 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="梯度下降算法"></a>梯度下降算法</h1><p>损失函数在隐藏层（层2）／输出层（层3）关于偏置的梯度 </p>
 <script type="math/tex; mode=display">\begin{align*} & \dfrac {\partial C_{\mathbf{x}}} {\partial b_{j}^{l}}=\dfrac {\partial C_{\mathbf{x}}} {\partial z_{j}^{l}}\cdot \dfrac {\partial z_{j}^{l}} {\partial b_{j}^{l}}=\delta _{j}^{l}\cdot \dfrac {\partial \left( \sum _{k}w_{jk}^{l}a_{k}^{l-1}+b_{j}^{l}\right) } {\partial b_{j}^{l}}=\delta _{j}^{l}\quad\left( l=2,3\right)\end{align*}</script><p>损失函数在隐藏层（层2）／输出层（层3）关于权值的梯度</p>
 <script type="math/tex; mode=display">\begin{align*} & \dfrac {\partial C_{\mathbf{x}}} {\partial w_{jk}^{l}}=\dfrac {\partial C_{\mathbf{x}}} {\partial z_{j}^{l}}\cdot \dfrac {\partial z_{j}^{l}} {\partial w_{jk}^{l}}=\delta _{j}^{l}\cdot \dfrac {\partial \left( \sum _{k}w_{jk}^{l}a_{k}^{l-1}+b_{j}^{l}\right) } {\partial w_{jk}^{l}}=\delta _{j}^{l}\cdot a_{k}^{l-1}\quad\left( l=2,3\right)\end{align*}</script><p>偏置与权值的梯度计算算法<br>输入：实例$\mathbf{x}=\left(x^{\left(1\right)},\cdots,x^{\left(n\right)}\right)^\top$<br>输出：损失函数在隐藏层（层2）／输出层（层3）关于偏置及权值的梯度</p>
-<script type="math/tex; mode=display">\left(\dfrac {\partial C_{\mathbf{x}}} {\partial b_{j}^{l}}\right)$和$\left(\dfrac {\partial C_{\mathbf{x}}} {\partial w_{jk}^{l}}\right)</script><ol>
+<script type="math/tex; mode=display">\left(\dfrac {\partial C_{\mathbf{x}}} {\partial b_{j}^{l}}\right)和\left(\dfrac {\partial C_{\mathbf{x}}} {\partial w_{jk}^{l}}\right)</script><ol>
 <li>为输入层设置对应的激活值<script type="math/tex">\left(a_j^1\right)_{j=1}^n=\left(x^{\left(j\right)}\right)_{j=1}^n</script></li>
 <li>前向传播：对每个$l（l=2,3）$计算<script type="math/tex">\begin{align*} &a_{j}^{l}=\sigma \left( z_{j}^{l}\right) \\ & z_{j}^{l}= \sum _{k}w_{jk}^{l}\cdot a_{k}^{l-1}+b_{j}^{l}\end{align*}</script></li>
 <li>计算输出层误差<script type="math/tex">\left(\delta _{j}^{3}\right)_{j=1}^m</script>；  </li>
