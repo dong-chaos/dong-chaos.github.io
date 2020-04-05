@@ -20,27 +20,32 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="DAWN">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="在NLP领域里，中文分词对于处在中文语言环境的我们来说，是基础中的基础，核心中的核心，很多NLP任务都依赖中文分词的结果，同时中文分词所使用的技术可以很好的应用到其它领域，比如：语音识别、实体识别等等，以下是关于中文分词算法总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文分词算法">
+<meta property="og:url" content="http://yoursite.com/2019/10/01/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="DAWN">
+<meta property="og:description" content="在NLP领域里，中文分词对于处在中文语言环境的我们来说，是基础中的基础，核心中的核心，很多NLP任务都依赖中文分词的结果，同时中文分词所使用的技术可以很好的应用到其它领域，比如：语音识别、实体识别等等，以下是关于中文分词算法总结。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-30T17:30:00.000Z">
+<meta property="article:modified_time" content="2020-04-05T10:16:50.133Z">
 <meta property="article:author" content="DCDC">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2019/10/01/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false
+    isHome : false,
+    isPost : true
   };
 </script>
 
-  <title>DAWN</title>
+  <title>中文分词算法 | DAWN</title>
   
 
 
@@ -150,86 +155,10 @@
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/Python%E7%88%AC%E8%99%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="DCDC">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DAWN">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/10/Python%E7%88%AC%E8%99%AB/" class="post-title-link" itemprop="url">Python爬虫之爬取京东商城笔记本价格、名称、评论等信息</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-10 14:55:56" itemprop="dateCreated datePublished" datetime="2020-02-10T14:55:56+08:00">2020-02-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <h1 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h1><p>我们使用谷歌Chrome浏览器，在开始之前需要安装Chrome浏览器并配置ChromeDriver。而且还需要安装Python的Selenium库。</p>
-<h2 id="安装-selenium"><a href="#安装-selenium" class="headerlink" title="安装 selenium"></a>安装 selenium</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
-<p>如果没有pip，请安装pip,请自行百度</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/10/Python%E7%88%AC%E8%99%AB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
   
   
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/01/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -243,8 +172,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/01/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">中文分词算法</a>
+          中文分词算法
         </h1>
 
         <div class="post-meta">
@@ -277,182 +205,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在NLP领域里，中文分词对于处在中文语言环境的我们来说，是基础中的基础，核心中的核心，很多NLP任务都依赖中文分词的结果，同时中文分词所使用的技术可以很好的应用到其它领域，比如：语音识别、实体识别等等，以下是关于中文分词算法总结。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/01/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+        <p>在NLP领域里，中文分词对于处在中文语言环境的我们来说，是基础中的基础，核心中的核心，很多NLP任务都依赖中文分词的结果，同时中文分词所使用的技术可以很好的应用到其它领域，比如：语音识别、实体识别等等，以下是关于中文分词算法总结。</p>
+<a id="more"></a> 
+<h3 id="基于字符串匹配算法"><a href="#基于字符串匹配算法" class="headerlink" title="基于字符串匹配算法"></a>基于字符串匹配算法</h3><p>将待匹配的字符串基于一定的算法策略，和一个足够大的词典进行字符串匹配，如果匹配命中，则可以分词。词典里统计了超大规模的语料数据，根据词典不同的匹配策略，又分为正向最大匹配法，逆向最大匹配法，双向匹配分词，全切分路径选择等。</p>
+<h4 id="正向最大匹配法"><a href="#正向最大匹配法" class="headerlink" title="正向最大匹配法"></a>正向最大匹配法</h4><p>从左到右对语句进行匹配，匹配的词越长越好。</p>
+<p>比如“商务处女干事”，划分为“商务处/女干事”，而不是“商务/处女/干事”。这种方式切分会有歧义问题出现，比如“结婚和尚未结婚的同事”，会被划分为“结婚/和尚/未/结婚/的/同事”。</p>
+<h4 id="逆向最大匹配法"><a href="#逆向最大匹配法" class="headerlink" title="逆向最大匹配法"></a>逆向最大匹配法</h4><p>从右到左对语句进行匹配，同样也是匹配的词越长越好。</p>
+<p>比如“他从东经过我家”，划分为“他/从/东/经过/我家”。这种方式同样也会有歧义问题，比如“他们昨日本应该回来”，会被划分为“他们/昨/日本/应该/回来”。</p>
+<h4 id="双向匹配分词"><a href="#双向匹配分词" class="headerlink" title="双向匹配分词"></a>双向匹配分词</h4><p>同时采用正向最大匹配和逆向最大匹配，选择二者分词结果中词数较少者。</p>
+<p>但这种方式同样会产生歧义问题，比如“他将来上海”，会被划分为“他/将来/上海”。由此可见，词数少也不一定划分就正确。</p>
+<h4 id="全切分路径选择"><a href="#全切分路径选择" class="headerlink" title="全切分路径选择"></a>全切分路径选择</h4><p>将所有可能的切分结果全部列出来，从中选择最佳的切分路径。分为两种选择方法：</p>
+<ul>
+<li><p>n最短路径方法。将所有的切分结果组成有向无环图，切词结果作为节点，词和词之间的边赋予权重，找到权重和最小的路径即为最终结果。比如可以通过词频作为权重，找到一条总词频最大的路径即可认为是最佳路径。</p>
+</li>
+<li><p>n元语法模型。同样采用n最短路径，只不过路径构成时会考虑词的上下文关系。一元表示考虑词的前后一个词，二元则表示考虑词的前后两个词。然后根据语料库的统计结果，找到概率最大的路径。</p>
+</li>
+</ul>
+<h3 id="基于统计的分词算法"><a href="#基于统计的分词算法" class="headerlink" title="基于统计的分词算法"></a>基于统计的分词算法</h3><p>基于统计的分词算法，本质上是一个序列标注问题。我们将语句中的字，按照他们在词中的位置进行标注。标注主要有：B（词开始的一个字），E（词最后一个字），M（词中间的字，可能多个），S（一个字表示的词）。</p>
+<p>例如“网商银行是蚂蚁金服微贷事业部的最重要产品”，标注后结果为“BMMESBMMEBMMMESBMEBE”，对应的分词结果为“网商银行/是/蚂蚁金服/微贷事业部/的/最重要/产品”。我们基于统计分析方法，得到序列标注结果，就可以得到分词结果了。</p>
+<p>这类算法主要有HMM，CRF，SVM，以及深度学习等。这里jieba分词主要用得到的是HMM隐马尔科夫模型。</p>
+
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="DCDC">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DAWN">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" class="post-title-link" itemprop="url">机器学习之逻辑回归</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-08-15 09:34:56" itemprop="dateCreated datePublished" datetime="2019-08-15T09:34:56+08:00">2019-08-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>因为这几天在看周志华老师的西瓜书，所以将自己在看书中学到的知识点并结合其他老师的博客进行总结，正好加深一下对算法的理解，也方便自己后续进行复习。</p>
-<h1 id="一、逻辑回归模型"><a href="#一、逻辑回归模型" class="headerlink" title="一、逻辑回归模型"></a>一、逻辑回归模型</h1><p>对数几率回归就是我们通常所说的逻辑回归(Logistic Regression)，周志华老师说中文的”逻辑”与”Logistic”和”logic”的含义相差甚远,所以将他命名为对数几率回归，学习完逻辑回归，我们也算是进入了机器学习的大门了，大家加油啊。<br>逻辑回归虽然它的名字是回归，但实际上却是一种分类学习方法，主要是二分类。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" rel="prev" title="机器学习之逻辑回归">
+      <i class="fa fa-chevron-left"></i> 机器学习之逻辑回归
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/Python%E7%88%AC%E8%99%AB/" rel="next" title="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">
+      Python爬虫之爬取京东商城笔记本价格、名称、评论等信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/09/%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-FNN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="DCDC">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DAWN">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/09/%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-FNN/" class="post-title-link" itemprop="url">前馈神经网络-FNN</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-09 11:30:00" itemprop="dateCreated datePublished" datetime="2019-07-09T11:30:00+08:00">2019-07-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这两天在学习深度学习的相关知识，为了巩固自己所学的知识，在这里继续整理一下前馈神经网络.<br>在前馈神经网络中，不同的神经元属于不同的层，每一层的神经元可以接受到前一层的神经元信号，并产生信号输出到下一层。第0层叫做输入层，最后一层叫做输出层，中间的叫做隐藏层，整个网络中无反馈，信号从输入层到输出层单向传播，<br>可用一个有用无环图表示。前馈神经网络也成为多层感知器（Mutlti-Layer Perceptron，MLP）。但是多层感知器的叫法并不准确，因为前馈神经网络其实是由多层Logistic回归模型（连续的非线性模型）组成，<br>而不是有多层感知器模型（非连续的非线性模型）组成</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/09/%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-FNN/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -503,6 +308,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于字符串匹配算法"><span class="nav-number">1.</span> <span class="nav-text">基于字符串匹配算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正向最大匹配法"><span class="nav-number">1.1.</span> <span class="nav-text">正向最大匹配法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逆向最大匹配法"><span class="nav-number">1.2.</span> <span class="nav-text">逆向最大匹配法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双向匹配分词"><span class="nav-number">1.3.</span> <span class="nav-text">双向匹配分词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全切分路径选择"><span class="nav-number">1.4.</span> <span class="nav-text">全切分路径选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于统计的分词算法"><span class="nav-number">2.</span> <span class="nav-text">基于统计的分词算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
