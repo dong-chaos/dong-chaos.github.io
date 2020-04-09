@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/P-R.png">
 <meta property="og:image" content="http://yoursite.com/images/ROC.png">
 <meta property="article:published_time" content="2019-08-12T01:15:09.000Z">
-<meta property="article:modified_time" content="2020-04-09T14:28:03.643Z">
+<meta property="article:modified_time" content="2020-04-09T14:39:19.115Z">
 <meta property="article:author" content="DCDC">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -199,6 +199,20 @@
             </span>
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/08/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/12/机器学习模型评估方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -209,15 +223,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​<br>我们对模型的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量，性能度量反应了任务需求，在对比不同模型的能力时，使用不同的性能度量往往会导致不同的评判结果，<br>这意味着模型的好坏时相对的，分类评估方法主要功能是用来评估分类算法的好坏，而评估一个分类器算法的好坏又包括许多项指标。了解各种评估方法，在实际应用中选择正确的评估方法是十分重要的，</p>
+        <p>​<br>我们对模型的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量，性能度量反应了任务需求，在对比不同模型的能力时，使用不同的性能度量往往会导致不同的评判结果，这意味着模型的好坏时相对的，分类评估方法主要功能是用来评估分类算法的好坏，而评估一个分类器算法的好坏又包括许多项指标。了解各种评估方法，在实际应用中选择正确的评估方法是十分重要的，</p>
 <a id="more"></a> 
 <h3 id="查准率、查全率"><a href="#查准率、查全率" class="headerlink" title="查准率、查全率"></a>查准率、查全率</h3><p>对于二分类问题，可将样例根据器真实类别与学习器预测类别的组合划分为真正例（TP）、假正例（FP）、真反例（TN）、假反例（FN）以下四种情形<br>True positives(TP): 被正确地划分为正例的个数，即实际为正例且被分类器划分为正例的实例数；<br>False positives(FP): 被错误地划分为正例的个数，即实际为负例但被分类器划分为正例的实例数；<br>False negatives(FN):被错误地划分为负例的个数，即实际为正例但被分类器划分为负例的实例数；<br>True negatives(TN): 被正确地划分为负例的个数，即实际为负例且被分类器划分为负例的实例数。　<br>显然有 TP+FP+TN+FN = 样例总数，分类结果的混淆矩阵如下</p>
 <p><img src="/images/Confusion.png" alt="混淆矩阵"></p>
-<p>查准率P<br>P = \frac{TP}{TP+FP}</p>
-<p>查全率R也叫做召回率<br>R = \frac{TP}{TP+FN}<br>查准率和查全率是一对矛盾的度量，一般来说，查准率高时，查全率往往偏低，而查全率高时，查准率往往偏低。</p>
-<h3 id="P-R曲线"><a href="#P-R曲线" class="headerlink" title="P-R曲线"></a>P-R曲线</h3><p>P-R图（下图）直观的显示出学习器在样本总体上的查全率、查准率，在进行比较时，若一个学习器的P-R曲线被另一个学习器曲线完全包住，则可以确定后者的性能优于前者，例如下图学习器A的性能优于学习器C。如果两个P-R曲线发生了交叉，如下图A和B<br>则难以判断两者孰优孰劣，只能在具体的查准率或查全率条件下进行比较。<br>查准率和召回率反映了分类器分类性能的两个方面。如果综合考虑查准率与查全率，也就是平衡点，可以得到新的评价指标F1-score，也称为综合分类率<br><img src="/images/P-R.png" alt="PR曲线与平衡点示意图"></p>
+<p>查准率P</p>
+<script type="math/tex; mode=display">P = \frac{TP}{TP+FP}</script><p>查全率R也叫做召回率</p>
+<script type="math/tex; mode=display">R = \frac{TP}{TP+FN}</script><p>查准率和查全率是一对矛盾的度量，一般来说，查准率高时，查全率往往偏低，而查全率高时，查准率往往偏低。</p>
+<h3 id="P-R曲线"><a href="#P-R曲线" class="headerlink" title="P-R曲线"></a>P-R曲线</h3><p>P-R图（下图）直观的显示出学习器在样本总体上的查全率、查准率，在进行比较时，若一个学习器的P-R曲线被另一个学习器曲线完全包住，则可以确定后者的性能优于前者，例如下图学习器A的性能优于学习器C。如果两个P-R曲线发生了交叉，如下图A和B则难以判断两者孰优孰劣，只能在具体的查准率或查全率条件下进行比较。查准率和召回率反映了分类器分类性能的两个方面。如果综合考虑查准率与查全率，也就是平衡点，可以得到新的评价指标F1-score，也称为综合分类率<br><img src="/images/P-R.png" alt="PR曲线与平衡点示意图"></p>
 <p>PR曲线是Precision Recall Curve的简称，描述的是precision和recall之间的关系，以recall为横坐标，precision为纵坐标绘制的曲线。该曲线的所对应的面积AUC实际上是目标检测中常用的评价指标平均精度（Average Precision, AP），<br>AP越高，说明模型性能越好。</p>
-<h3 id="ROC和AUC"><a href="#ROC和AUC" class="headerlink" title="ROC和AUC"></a>ROC和AUC</h3><p>真正例率<br>TPR = \frac{TP}{TP+FN}<br>假正例率<br>FPR = \frac{FP}{TN+FP}<br>ROC曲线是（Receiver Operating Characteristic Curve，受试者工作特征曲线）的简称，是以灵敏度（真阳性率）为纵坐标，以1减去特异性（假阳性率）为横坐标绘制的性能评价曲线。可以将不同模型对同一数据集的ROC曲线绘制在同一笛<br>卡尔坐标系中，ROC曲线越靠近右上角，说明其对应模型越可靠。也可以通过ROC曲线下面的面积（Area Under Curve, AUC）来评价模型，AUC越大，模型越可靠。</p>
+<h3 id="ROC和AUC"><a href="#ROC和AUC" class="headerlink" title="ROC和AUC"></a>ROC和AUC</h3><p>真正例率</p>
+<script type="math/tex; mode=display">TPR = \frac{TP}{TP+FN}</script><p>假正例率</p>
+<script type="math/tex; mode=display">FPR = \frac{FP}{TN+FP}</script><p>ROC曲线是（Receiver Operating Characteristic Curve，受试者工作特征曲线）的简称，是以灵敏度（真阳性率）为纵坐标，以1减去特异性（假阳性率）为横坐标绘制的性能评价曲线。可以将不同模型对同一数据集的ROC曲线绘制在同一笛卡尔坐标系中，ROC曲线越靠近右上角，说明其对应模型越可靠。也可以通过ROC曲线下面的面积（Area Under Curve, AUC）来评价模型，AUC越大，模型越可靠。</p>
 <p><img src="/images/ROC.png" alt="ROC曲线和AUC"></p>
 <h3 id="什么时最好的分类器"><a href="#什么时最好的分类器" class="headerlink" title="什么时最好的分类器"></a>什么时最好的分类器</h3><p>​对某一个任务，某个具体的分类器不可能同时满足或提高所有上面介绍的指标。​ 如果一个分类器能正确分对所有的实例，那么各项指标都已经达到最优，但这样的分类器往往不存在。比如之前说的地震预测，<br>既然不能百分百预测地震的发生，但实际情况中能容忍一定程度的误报。假设在1000次预测中，共有5次预测发生了地震，真实情况中有一次发生了地震，其他4次则为误报。正确率由原来的999/1000=99.9下降为996/1000=99.6。<br>召回率由0/1=0%上升为1/1=100%。对此解释为，虽然预测失误了4次，但真的地震发生前，分类器能预测对，没有错过，这样的分类器实际意义更为重大，正是我们想要的。在这种情况下，在一定正确率前提下，要求分类器的召回率尽量高</p>
 
@@ -258,6 +275,13 @@
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -468,6 +492,37 @@
     
 
   
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://dongchao.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/08/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2019/08/12/机器学习模型评估方法/";
+    this.page.title = "机器学习模型评估方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://dongchao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
 
 </body>
 </html>
