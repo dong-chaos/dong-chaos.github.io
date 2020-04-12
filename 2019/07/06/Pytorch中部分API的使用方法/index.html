@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近在学习Pytorch，学习的过程中将使用到的API总结一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch中基本API的使用方法">
+<meta property="og:url" content="http://yoursite.com/2019/07/06/Pytorch%E4%B8%AD%E9%83%A8%E5%88%86API%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="DAWN">
+<meta property="og:description" content="最近在学习Pytorch，学习的过程中将使用到的API总结一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-06T01:12:15.000Z">
+<meta property="article:modified_time" content="2020-04-12T09:42:29.121Z">
+<meta property="article:author" content="DCDC">
+<meta property="article:tag" content="pytorch">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/07/06/Pytorch%E4%B8%AD%E9%83%A8%E5%88%86API%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Pytorch中基本API的使用方法 | DAWN</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DAWN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/Pytorch%E4%B8%AD%E9%83%A8%E5%88%86API%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DCDC">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DAWN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pytorch中基本API的使用方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-06 09:12:15" itemprop="dateCreated datePublished" datetime="2019-07-06T09:12:15+08:00">2019-07-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pytorch/" itemprop="url" rel="index"><span itemprop="name">pytorch</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/07/06/Pytorch%E4%B8%AD%E9%83%A8%E5%88%86API%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/06/Pytorch中部分API的使用方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近在学习Pytorch，学习的过程中将使用到的API总结一下。</p>
+<a id="more"></a> 
+<h2 id="torch-zeros"><a href="#torch-zeros" class="headerlink" title="torch.zeros"></a>torch.zeros</h2><p>返回一个全为标量 0 的张量.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.zeros(*sizes, out&#x3D;None) </span><br><span class="line">sizes (int...) – 整数序列，定义了输出形状</span><br><span class="line">out (Tensor, optional) – 结果张量</span><br></pre></td></tr></table></figure><br>类似方法还有<br>torch.randn(2,3)随机一个两行三列的tensor<br>torch.argmax() 获取最大位置<br>torch.matmul()两个矩阵相乘，支持numpy的broadcast机制</p>
+<h2 id="nn-embedding"><a href="#nn-embedding" class="headerlink" title="nn.embedding"></a>nn.embedding</h2><p>随机初始化生成一个V<em>N得矩阵，每一个1</em>N维都代表一个词向量<br>这里面有两个重要参数：词汇表的大小V和词嵌入的维度N</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nn.embedding(self, num_embeddings, embedding_dim, padding_idx&#x3D;None,</span><br><span class="line">                 max_norm&#x3D;None, norm_type&#x3D;2., scale_grad_by_freq&#x3D;False,</span><br><span class="line">                 sparse&#x3D;False, _weight&#x3D;None)</span><br><span class="line">				 </span><br><span class="line">#outputSize ：word大小 featureSize：特征大小</span><br><span class="line">self.embedding &#x3D; nn.Embedding(outputSize + 1, featureSize)</span><br><span class="line"># input: batchSize × seq_len; 词的index</span><br><span class="line">input &#x3D; self.embedding(input)  # &#x3D;&gt; output : batchSize × seq_len × featuresSize 对应的词嵌入</span><br></pre></td></tr></table></figure>
+<h2 id="nn-linear"><a href="#nn-linear" class="headerlink" title="nn.linear"></a>nn.linear</h2><p>对输入的数据进行线性变换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nn.linear(self, in_features, out_features, bias&#x3D;True)</span><br><span class="line">in_features ： 每个输入样本的大小</span><br><span class="line">out_features ： 每个输出样本的大小</span><br><span class="line">bias -：如果设置为False，则图层不会学习附加偏差。默认值：True</span><br><span class="line">self.linear &#x3D; nn.Linear(hiddenSize, outputSize)</span><br><span class="line">outputSize &#x3D; self.linear(hiddenSize)</span><br></pre></td></tr></table></figure>
+<h2 id="nn-utils-rnn-pack-padded-sequence-amp-nn-utils-rnn-pad-packed-sequence"><a href="#nn-utils-rnn-pack-padded-sequence-amp-nn-utils-rnn-pad-packed-sequence" class="headerlink" title="nn.utils.rnn.pack_padded_sequence&amp;nn.utils.rnn.pad_packed_sequence"></a>nn.utils.rnn.pack_padded_sequence&amp;nn.utils.rnn.pad_packed_sequence</h2><p>nn.utils.rnn.pack<em>padded_sequence(input, lengths, batch_first=False, enforce_sorted=True)<br>将一个填充过的变长序列压紧<br>nn.utils.rnn.pad_packed_sequence(sequence, batch_first=False, padding_value=0.0, total_length=None):<br>将encoderoutputs在转换为Variable类型，得到的</em>代表各个句子的长度，相当于解压<br>这里有一篇很好的文章说明了这两个方法的含义 <a href="https://zhuanlan.zhihu.com/p/34418001" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34418001</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">input：变长序列 被填充后的 batch 每批次大小*句子中最长的句子的长度*embedding的特征大小 这里是经过排序的</span><br><span class="line">lengths：Variable 中 每个序列的长度（知道了每个序列的长度，才能知道每个序列处理到多长停止）</span><br><span class="line">batch_first: 如果是True，input的形状应该是B*T*size。</span><br><span class="line">packed &#x3D; nn.utils.rnn.pack_padded_sequence(input, lengths, batch_first&#x3D;True) #packed: PackedSequence 对象</span><br><span class="line">output, hn &#x3D; self.gru(packed, hidden)  # output: batchSize × seq_len × hiddenSize*d; hn: numLayers*d × batchSize × hiddenSize</span><br><span class="line"></span><br><span class="line">output:sequence编码器的返回值 PackedSequence 对象。</span><br><span class="line">output, _ &#x3D; nn.utils.rnn.pad_packed_sequence(output, batch_first&#x3D;True)</span><br><span class="line"># output: batchSize × seq_len × hiddenSize</span><br></pre></td></tr></table></figure>
+<h2 id="model-train"><a href="#model-train" class="headerlink" title="model.train()"></a>model.train()</h2><p>切换到训练模式，主要是针对model 在训练时和评价时不同的 Batch Normalization  和  Dropout 方法模式<br>train(mode=True)<br>parameters(memo=None) 返回一个 包含模型所有参数 的迭代器，一般用作optimizer的参数</p>
+<h2 id="model-eval"><a href="#model-eval" class="headerlink" title="model.eval()"></a>model.eval()</h2><p>切换到预测模式，主要是针对model 在训练时和评价时不同的 Batch Normalization  和  Dropout 方法模式</p>
+<h2 id="forward"><a href="#forward" class="headerlink" title="forward()"></a>forward()</h2><p>如果类继承自nn.Module，则必须实现该方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class EncoderRNN(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(EncoderRNN, self).__init__()</span><br><span class="line"></span><br><span class="line">    def forward(self, input):</span><br><span class="line">		...</span><br><span class="line">		return input</span><br><span class="line">		</span><br><span class="line"># 实例化对象</span><br><span class="line">module &#x3D; EncoderRNN()</span><br><span class="line">module()  #这里会调用forward，是因为Module 里的 __call__方法</span><br><span class="line">#__call__ 的主要作用是使得类对象具有类似函数的功能</span><br><span class="line">#pytorch 源码如下 </span><br><span class="line">def __call__(self, *input, **kwargs):</span><br><span class="line">    for hook in self._forward_pre_hooks.values():</span><br><span class="line">        result &#x3D; hook(self, input)</span><br><span class="line">        if result is not None:</span><br><span class="line">            if not isinstance(result, tuple):</span><br><span class="line">                result &#x3D; (result,)</span><br><span class="line">            input &#x3D; result</span><br><span class="line">	#这里调用了forward</span><br><span class="line">    if torch._C._get_tracing_state():</span><br><span class="line">        result &#x3D; self._slow_forward(*input, **kwargs)</span><br><span class="line">    else:</span><br><span class="line">        result &#x3D; self.forward(*input, **kwargs)</span><br></pre></td></tr></table></figure></p>
+<h2 id="torch-optim"><a href="#torch-optim" class="headerlink" title="torch.optim"></a>torch.optim</h2><p>优化器包，在初始化一个优化器的时候需要传入需要训练的参数，并且所有的optimizer都实现了一个step()方法来更新参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#初始化优化器，需要进行设置优化器需要的参数，比如学习率lr</span><br><span class="line">encoderOptimzer &#x3D; torch.optim.Adam(self.encoderRNN.parameters(), lr&#x3D;lr, betas&#x3D;betas, eps&#x3D;eps,</span><br><span class="line">                                   weight_decay&#x3D;weight_decay)</span><br><span class="line">decoderOptimzer &#x3D; torch.optim.Adam(self.decoderRNN.parameters(), lr&#x3D;lr, betas&#x3D;betas, eps&#x3D;eps,</span><br><span class="line">                                   weight_decay&#x3D;weight_decay)</span><br><span class="line">								   </span><br><span class="line">encoderOptimzer.zero_grad()  # 更新梯度时，参数的梯度设为0，将grad设置为0</span><br><span class="line">decoderOptimzer.zero_grad()</span><br><span class="line"># 在这里进行模型的前向过程，代码省略</span><br><span class="line">(loss &#x2F; nTotal).backward()  # 反向传播，计算梯度</span><br><span class="line">encoderOptimzer.step()  # 更新模型参数</span><br><span class="line">decoderOptimzer.step()</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/10/Python%E7%88%AC%E8%99%AB/" rel="prev" title="Python爬虫之爬取京东商城笔记本价格、名称、评论等信息">
+      <i class="fa fa-chevron-left"></i> Python爬虫之爬取京东商城笔记本价格、名称、评论等信息
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95/" rel="next" title="机器学习模型评估方法">
+      机器学习模型评估方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#torch-zeros"><span class="nav-number">1.</span> <span class="nav-text">torch.zeros</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nn-embedding"><span class="nav-number">2.</span> <span class="nav-text">nn.embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nn-linear"><span class="nav-number">3.</span> <span class="nav-text">nn.linear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nn-utils-rnn-pack-padded-sequence-amp-nn-utils-rnn-pad-packed-sequence"><span class="nav-number">4.</span> <span class="nav-text">nn.utils.rnn.pack_padded_sequence&amp;nn.utils.rnn.pad_packed_sequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-train"><span class="nav-number">5.</span> <span class="nav-text">model.train()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-eval"><span class="nav-number">6.</span> <span class="nav-text">model.eval()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#forward"><span class="nav-number">7.</span> <span class="nav-text">forward()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#torch-optim"><span class="nav-number">8.</span> <span class="nav-text">torch.optim</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DCDC</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DCDC</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://dongchao.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/07/06/Pytorch%E4%B8%AD%E9%83%A8%E5%88%86API%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2019/07/06/Pytorch中部分API的使用方法/";
+    this.page.title = "Pytorch中基本API的使用方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://dongchao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
