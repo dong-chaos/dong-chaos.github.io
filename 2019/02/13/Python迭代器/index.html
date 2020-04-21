@@ -28,7 +28,7 @@
 <meta property="og:description" content="在某些对象中会包含对其它对象的引用，这样的对象被称作容器(containers)。因此，我们可以把容器视作用于组织各种元素的数据结构。容器是存储在内存中的数据结构，并且通常会将全部的值都保存在内存中(也有一些特例，并不是所有的元素都放在内存，比如迭代器和生成器对象)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-02-13T02:34:26.000Z">
-<meta property="article:modified_time" content="2020-04-15T13:26:00.767Z">
+<meta property="article:modified_time" content="2020-04-15T13:33:33.036Z">
 <meta property="article:author" content="DCDC">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -223,12 +223,12 @@
 <p>下面是一些常见的容器对象：</p>
 <p>list, deque<br>set, frozensets<br>dict, defaultdict, OrderedDict, Counter<br>tuple, namedtuple<br>str..</p>
 <h1 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h1><p>用简单的话讲，就是从某个地方(比如：list)取出一个元素的过程，当我们使用一个循环来遍历某个东西时，这个过程本身就叫迭代</p>
-<h1 id="可迭代对象"><a href="#可迭代对象" class="headerlink" title="可迭代对象"></a>可迭代对象</h1><p>python中任意的对象，只要它定义了可以返回一个迭代器<strong>iter</strong>方法或者定义了可以支持下标索引的<strong>getitem</strong>方法，那么它就是一个可迭代对象，简单说，可迭代对象就是能提供迭代器的任意对象。<br>可以使用isinstance()判断一个对象是否是Iterable对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from collections.abc import Iterable</span><br><span class="line">isinstance([], Iterable)</span><br><span class="line">True</span><br></pre></td></tr></table></figure></p>
+<h1 id="可迭代对象"><a href="#可迭代对象" class="headerlink" title="可迭代对象"></a>可迭代对象</h1><p>python中任意的对象，只要它定义了可以返回一个迭代器<strong>iter</strong>方法或者定义了可以支持下标索引的<strong>getitem</strong>方法，那么它就是一个可迭代对象，简单说，可迭代对象就是能提供迭代器的任意对象。<br>可以使用isinstance()判断一个对象是否是Iterable对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from collections.abc import Iterable</span><br><span class="line">isinstance([], Iterable)</span><br></pre></td></tr></table></figure></p>
 <h1 id="迭代器-iterator"><a href="#迭代器-iterator" class="headerlink" title="迭代器(iterator)"></a>迭代器(iterator)</h1><p>迭代器就是用于迭代操作（for 循环）的对象，它像列表一样可以迭代获取其中的每一个元素，任意对象，只要定义了next(python2)或<strong>next</strong>方法，它就是一个迭代器</p>
 <h1 id="生成起-generators"><a href="#生成起-generators" class="headerlink" title="生成起(generators)"></a>生成起(generators)</h1><p>生成起也叫一种迭代器，但是你只能对其迭代一次，这是因为它们并没有把所有值保存在内存中，而是在运行时生成值，你通过遍历来使用它们。要么用一个for循环，要么将它们传递给任意可以进行迭代的函数和结构，大多数生成起可以用函数来实现，然而，它们并不返回一个值，而是yield一个值</p>
 <p>创建一个生成器，有很多方法。<br>1、把一个列表生成式的[]改成()，就创建了一个生成器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; [x * x for x in range(10)]</span><br><span class="line">a</span><br><span class="line">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br><span class="line">b &#x3D; (x * x for x in range(10))</span><br><span class="line">b	#这里的b就是一个生成器</span><br><span class="line">#可以通过next()函数（允许我们获取序列的下一个值）获得generator的下一个返回值</span><br><span class="line">next(b)</span><br></pre></td></tr></table></figure></p>
 <p>2、函数内增加yield关键字以后，这个函数就不再是一个普通函数，而是一个生成器,以下就是一个生成器的例子(计算斐波那契数列)<br>注意：yield对应的值在函数被调用时不会立马返回，而是调用next()方法时才返回(本质上for循环也是调用next方法)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def fibon(n):</span><br><span class="line">	a &#x3D; b &#x3D; 1</span><br><span class="line">	for i in range(n):</span><br><span class="line">		yield a	</span><br><span class="line">		a, b &#x3D; b, a + b</span><br><span class="line"></span><br><span class="line">for x in fibon(10000):</span><br><span class="line">	print(x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def fibon(n):</span><br><span class="line">  a &#x3D; b &#x3D; 1</span><br><span class="line">  for i in range(n):</span><br><span class="line">	yield a	</span><br><span class="line">	a, b &#x3D; b, a + b</span><br><span class="line"></span><br><span class="line">for x in fibon(10000):</span><br><span class="line">  print(x)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -334,20 +334,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
