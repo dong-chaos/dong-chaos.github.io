@@ -242,6 +242,148 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DCDC">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DAWN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/01/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" class="post-title-link" itemprop="url">朴素贝叶斯模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-01 11:30:06" itemprop="dateCreated datePublished" datetime="2019-11-01T11:30:06+08:00">2019-11-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/11/01/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/01/朴素贝叶斯/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a> 
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>条件概率：在A发生的条件下B发生的概率</p>
+<script type="math/tex; mode=display">\begin{align}p\left(B|A\right)\end{align}</script><p>联合概率：就是既满足 X 条件，又满足 Y 条件的概率</p>
+<script type="math/tex; mode=display">\begin{align}p\left(X,Y\right)\end{align}</script><p>边缘概率:以下公式就是关于X的边缘分布。</p>
+<script type="math/tex; mode=display">\begin{align}p\left(X\right)\end{align}</script><h3 id="朴素贝叶斯法"><a href="#朴素贝叶斯法" class="headerlink" title="朴素贝叶斯法"></a>朴素贝叶斯法</h3><p>朴素贝叶斯法是基于贝叶斯定理与特征条件独立假设的分类方法。</p>
+<h4 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h4><script type="math/tex; mode=display">\begin{align}p\left(X|Y\right) =  \frac{p\left(Y|X\right)p\left(X\right) }{p\left(Y\right)}\end{align}</script><p>该公式表示在Y事件发生的条件下X事件发生的条件概率，等于X事件发生条件下Y事件发生的条件概率乘以X事件的概率，再除以Y事件发生的概率。公式中，P(X)也叫做先验概率，P(X/Y)叫做后验概率。严格地讲，贝叶斯公式至少应被称为“贝叶斯-拉普拉斯公式”</p>
+<h4 id="条件独立性假设-朴素贝叶斯中朴素的含义"><a href="#条件独立性假设-朴素贝叶斯中朴素的含义" class="headerlink" title="条件独立性假设(朴素贝叶斯中朴素的含义)"></a>条件独立性假设(朴素贝叶斯中朴素的含义)</h4><p>朴素贝叶斯的基本假设条件是条件独立性假设 ,假设每个特征,对于其他特征,是独立的，即特征之间相互独立，就有</p>
+<script type="math/tex; mode=display">\begin{align}p\left(A,D|B\right) =  p\left(A|B\right)p\left(D|B\right)\end{align}</script><h4 id="两个万能公式"><a href="#两个万能公式" class="headerlink" title="两个万能公式"></a>两个万能公式</h4><p>概率加和规则：</p>
+<script type="math/tex; mode=display">\begin{align}
+p\left(X=x_i\right)&=\sum_{j=1}^N p\left(X=x_i,Y=y_j\right) \\
+p\left(X\right)&=\sum_Y p\left(X,Y\right)
+\end{align}</script><p>概率乘积规则：</p>
+<script type="math/tex; mode=display">\begin{align}
+p\left(X=x_i,Y=y_j\right)&=p\left(Y=y_j|X=x_i\right)p\left(X=x_i\right) \\
+p\left(X,Y\right)&=p\left(Y|X\right)p\left(X\right)
+\end{align}</script><h4 id="朴素贝叶斯法的学习与分类"><a href="#朴素贝叶斯法的学习与分类" class="headerlink" title="朴素贝叶斯法的学习与分类"></a>朴素贝叶斯法的学习与分类</h4><p>训练数据集</p>
+<script type="math/tex; mode=display">\begin{align}\\& T = \left\{ \left( \mathbf{x}_{1}, y_{1} \right), \left( \mathbf{x}_{2}, y_{2} \right), \cdots, \left( \mathbf{x}_{N}, y_{N} \right) \right\}\end{align}</script><p>由$P \left( X, Y \right)$独立同分布产生。其中，<script type="math/tex">\mathbf{x}_{i} \in \mathcal{X} \subseteq \mathbb{R}^{n}, y_{i} \in \mathcal{Y} = \left\{ c_{1}, c_{2}, \cdots, c_{K} \right\}, i = 1, 2, \cdots, N</script>，<script type="math/tex">\mathbf{x}_{i}\</script>   为第<script type="math/tex">i</script>个特征向量（实例），<script type="math/tex">y_{i}</script>为<script type="math/tex">\mathbf{x}_{i}</script>的类标记，<br>$X$是定义在输入空间$\mathcal{X}$上的随机向量，$Y$是定义在输出空间$\mathcal{Y}$上的随机变量。$P \left( X, Y \right)$是$X$和$Y$的联合概率分布。</p>
+<p>条件独立性假设</p>
+<script type="math/tex; mode=display">\begin{align} 
+\\P \left( X = \mathbf{x} | Y = c_{k} \right) &= P \left( X^{\left( 1 \right)} = x^{\left( 1 \right)} , \cdots, X^{\left( n \right)} = x^{\left( n \right)} | Y = c_{k}\right) 
+\\ &= \prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right) 
+\end{align}</script><p>即，用于分类的特征在类确定的条件下都是条件独立的。</p>
+<p>由</p>
+<script type="math/tex; mode=display">\begin{align*} \\& P \left( X = \mathbf{x}, Y = c_{k} \right) = P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right)
+\\ & P \left( X = \mathbf{x}, Y = c_{k} \right) = P \left( Y = c_{k}| X = \mathbf{x} \right) P \left( X = \mathbf{x}  \right)\end{align*}</script><p>得</p>
+<script type="math/tex; mode=display">\begin{align*} \\ P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right) &= P \left( Y = c_{k}| X = \mathbf{x} \right) P \left( X = \mathbf{x}  \right)
+\\  P \left( Y = c_{k}| X = \mathbf{x} \right) & = \dfrac{P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right)}{P \left( X = \mathbf{x}  \right)} 
+\\ & = \dfrac{P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right)}{\sum_{Y} P \left( X = \mathbf{x}, Y = c_{k}  \right)}
+\\ &  = \dfrac{P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right)}{\sum_{Y} P \left(X = \mathbf{x} | Y = c_{k} \right) P \left( Y = c_{k} \right)}
+\\ &  = \dfrac{ P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)}{\sum_{Y} P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)}\end{align*}</script><p>朴素贝叶斯分类器可表示为</p>
+<script type="math/tex; mode=display">\begin{align*} y = f \left( \mathbf{x} \right) &= \mathop{\arg \max}_{c_{k}} \dfrac{ P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)}{\sum_{Y} P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)}
+\\ &= \mathop{\arg \max}_{c_{k}} P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)
+\end{align*}</script><h3 id="朴素贝叶斯法的参数估计"><a href="#朴素贝叶斯法的参数估计" class="headerlink" title="朴素贝叶斯法的参数估计"></a>朴素贝叶斯法的参数估计</h3><h4 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h4><p>朴素贝叶斯模型参数的极大似然估计  </p>
+<ol>
+<li><p>先验概率$P \left( Y = c_{k} \right)$的极大似然估计  </p>
+<script type="math/tex; mode=display">\begin{align*} \\& P \left( Y = c_{k} \right) = \dfrac{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right)}{N} \quad  k = 1, 2, \cdots, K\end{align*}</script></li>
+<li><p>设第$j$个特征<script type="math/tex">x^{\left( j \right)}</script>可能取值的集合为<script type="math/tex">\left\{ a_{j1}, a_{j2}, \cdots, a_{j S_{j}} \right\}</script>，条件概率<script type="math/tex">P \left( X^{\left( j \right)} = a_{jl} | Y = c_{k} \right)</script>的极大似然估计</p>
+<script type="math/tex; mode=display">\begin{align*} \\& P \left( X^{\left( j \right)} = a_{jl} | Y = c_{k} \right) ＝ \dfrac{\sum_{i=1}^{N} I \left(x_{i}^{\left( j \right)}=a_{jl}, y_{i} = c_{k} \right)}{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right)}
+\\ & j = 1, 2, \cdots, n;\quad l = 1, 2, \cdots, S_{j};\quad k = 1, 2, \cdots, K\end{align*}</script><p>其中，<script type="math/tex">x_{i}^{\left( j \right)}</script>是第<script type="math/tex">i</script>个样本的第<script type="math/tex">j</script>个特征；<script type="math/tex">a_{jl}</script>是第<script type="math/tex">j</script>个特征可能取的第<script type="math/tex">l</script>个值；<script type="math/tex">I</script>是指示函数。</p>
+</li>
+</ol>
+<p>朴素贝叶斯算法：  </p>
+<p>输入：线性可分训练数据集<script type="math/tex">T = \left\{ \left( \mathbf{x}_{1}, y_{1} \right), \left( \mathbf{x}_{2}, y_{2} \right), \cdots, \left( \mathbf{x}_{N}, y_{N} \right) \right\}</script>，其中<script type="math/tex">\mathbf{x}_{i}＝ \left( x_{i}^{\left(1\right)},x_{i}^{\left(2\right)},\cdots, x_{i}^{\left(n\right)} \right)^{T}</script>，<script type="math/tex">x_{i}^{\left( j \right)}</script>是第<script type="math/tex">i</script>个样本的第<script type="math/tex">j</script>个特征，<script type="math/tex">x_{i}^{\left( j \right)} \in \left\{ a_{j1}, a_{j2}, \cdots, a_{j S_{j}} \right\}</script>，<script type="math/tex">a_{jl}</script>是第<script type="math/tex">j</script>个特征可能取的第<script type="math/tex">l</script>个值，<script type="math/tex">j = 1, 2, \cdots, n; l = 1, 2, \cdots, S_{j},y_{i} \in  \left\{ c_{1}, c_{2}, \cdots, c_{K} \right\}</script>；实例<script type="math/tex">\mathbf{x}</script>；               </p>
+<p>输出：实例$\mathbf{x}$的分类</p>
+<ol>
+<li><p>计算先验概率及条件概率</p>
+<script type="math/tex; mode=display">\begin{align*}  \\ & P \left( Y = c_{k} \right) = \dfrac{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right)}{N} \quad  k = 1, 2, \cdots, K
+\\ & P \left( X^{\left( j \right)} = a_{jl} | Y = c_{k} \right) ＝ \dfrac{\sum_{i=1}^{N} I \left(x_{i}^{\left( j \right)}=a_{jl}, y_{i} = c_{k} \right)}{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right)}
+\\ & j = 1, 2, \cdots, n;\quad l = 1, 2, \cdots, S_{j};\quad k = 1, 2, \cdots, K\end{align*}</script></li>
+<li><p>对于给定的实例<script type="math/tex">\mathbf{x}=\left( x^{\left( 1 \right)}, x^{\left( 2 \right)}, \cdots, x^{\left( n \right)}\right)^{T}</script>，计算</p>
+<script type="math/tex; mode=display">\begin{align*}  \\ & P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right) \quad  k=1,2,\cdots,K\end{align*}</script></li>
+<li><p>确定实例$x$的类别  </p>
+<script type="math/tex; mode=display">\begin{align*} \\& y = f \left( \mathbf{x} \right) = \arg \max_{c_{k}} P \left( Y = c_{k} \right)\prod_{j=1}^{n} P \left( X^{\left( j \right)} = x^{\left( j \right)} | Y = c_{k} \right)  \end{align*}</script></li>
+</ol>
+<h4 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h4><p>朴素贝叶斯模型参数的贝叶斯估计    </p>
+<ol>
+<li><p>条件概率的贝叶斯估计</p>
+<script type="math/tex; mode=display">\begin{align*} \\& P_{\lambda} \left( X^{\left( j \right)} = a_{jl} | Y = c_{k} \right) ＝ \dfrac{\sum_{i=1}^{N} I \left(x_{i}^{\left( j \right)}=a_{jl}, y_{i} = c_{k} \right) + \lambda}{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right) + S_{j} \lambda} \end{align*}</script><p>式中<script type="math/tex">\lambda \geq 0</script>。当<script type="math/tex">\lambda ＝ 0</script>时，是极大似然估计；当<script type="math/tex">\lambda ＝ 1</script>时，称为拉普拉斯平滑。  </p>
+</li>
+<li><p>先验概率的贝叶斯估计</p>
+<script type="math/tex; mode=display">\begin{align*} \\&  P \left( Y = c_{k} \right) = \dfrac{\sum_{i=1}^{N} I \left( y_{i} = c_{k} \right) + \lambda}{N + K \lambda}\end{align*}</script></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/11/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,7 +1154,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
